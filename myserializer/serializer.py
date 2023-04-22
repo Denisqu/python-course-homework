@@ -14,7 +14,7 @@ import yaml
 
 def to_pickle(obj, file):
     pickle.dump(obj, file, pickle.HIGHEST_PROTOCOL)
-    pass
+    
 
 
 #
@@ -37,5 +37,5 @@ def to_json(obj, file):
 
 def to_yaml(obj, file):
     yaml.dump(obj, file, Dumper=yaml.Dumper)
-    pass
+    
 
