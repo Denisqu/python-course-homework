@@ -1,5 +1,5 @@
 select
-	cast(solved_count.coalesce as float) / (not_solved_count.coalesce + solved_count.coalesce) as ratio,
+	cast(solved_count.coalesce as float) / nullif(not_solved_count.coalesce + solved_count.coalesce, 0) as ratio,
 	solved_count.coalesce,
 	not_solved_count.coalesce
 from
@@ -10,7 +10,7 @@ from
 		from
 			task_student ts
 		where 
-			ts.id_student = 3
+			ts.id_student = 1
 		group by
 			ts.status
 		having
@@ -24,7 +24,7 @@ from
 		from
 			task_student ts
 		where 
-			ts.id_student = 3
+			ts.id_student = 1
 		group by
 			ts.status
 		having
