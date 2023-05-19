@@ -1,15 +1,15 @@
+# https://www.digitalocean.com/community/tutorials/how-to-structure-a-large-flask-application-with-flask-blueprints-and-flask-sqlalchemy
+# https://github.com/adyouri/large-flask-app-template/tree/main
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import text
 import sqlalchemy
-
-from model import db, Student
+from model import db, Group
 import utils
 import query
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../lab4/templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432'
 db.init_app(app)
+import routes
 utils.test_for_db_connection(app, db)
 
 # create db
@@ -19,10 +19,8 @@ with app.app_context():
     if not len(tables):
         db.create_all()
 
-
 # populate db with test data
-# TODO: проверять пустая ли бд, если да, то заполнять её тестовыми данными
 with app.app_context():
-    query.create_test_data()
-
+    if db.session.query(Group).first() is None:
+        query.create_test_data()
 

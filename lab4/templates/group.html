@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет группы</title>
+</head>
+<body>
+    <h1>Личный кабинет группы</h1>
+    <h2>Группа {{group.name}}</h2>
+    <h2>Успеваемость группы {{(group_ratio * 100)|round}}%</h2>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="3">Ученики группы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Имя</b></td>
+                <td><b>Git</b></td>
+                <td><b>Успеваемость</b></td>
+            </tr>
+            {% for student in students_w_tasks %}
+            <tr>
+                <td>{{student[0].name}}</td>
+                <td>{{student[0].git}}</td>
+                <td>{{(100 * student[1] / student[2])|round}}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <input placeholder="student id">
+    <button>Добавить ученика</button>
+    <hr>
+    <h2>Назначенные задачи</h2>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="4">Задачи</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Название</b></td>
+                <td><b>Описание</b></td>
+                <td><b>Код</b></td>
+                <td><b>Сложность</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <input placeholder="task id">
+    <button>Добавить Задачу</button>
+</body>
+</html>

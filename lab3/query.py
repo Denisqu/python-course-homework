@@ -1,5 +1,9 @@
 from model import *
 import random
+from sqlalchemy import func
+from sqlalchemy.sql.expression import false, true
+
+
 
 def create_test_data():
     # task difficulty
@@ -29,7 +33,6 @@ def create_test_data():
                             code=f"TaskCode{i}", category=math_category,
                             difficulty=medium))
         db.session.commit()
-
 
     group_b52 = Group(name="b-52")
     # groups
@@ -67,3 +70,81 @@ def create_test_data():
         db.session.commit()
 
 
+def get_all_students_in_group(group):
+    return db.session.query(Student).filter(Student.id_group == group.id)
+
+
+def change_students_task_status(student, task, status):
+    pass
+
+
+def get_all_student_tasks(s):
+    pass
+
+
+def get_groups_by_teacher(t):
+    pass
+
+
+def get_student_solved_problems(s):
+    pass
+
+
+# def get_student_solved_problems_ratio(student):
+#     task_count = len(student.tasks)
+#     done_count = 0
+#     for task in student.tasks:
+#         pass
+
+
+def get_students_with_tasks_from_group(group):
+    result = {}
+
+    _query = db.session.query(Student, Task_student) \
+        .filter(Student.id_group == group.id) \
+        .filter(Task_student.id_student == Student.id) \
+        .all()
+    print(_query)
+
+    return result
+
+
+def get_students_with_ratio_from_group(group):
+    _query_student_done_tasks = db.session.query(Student, Task_student) \
+        .join(Task_student) \
+        .filter(Student.id_group == group.id) \
+        .filter(Task_student.id_student == Student.id) \
+        .filter(Task_student.status == true()).subquery()
+
+    _query_done_tasks = db.session.query(Student,
+                                         func.count(_query_student_done_tasks.c.id_task).label('done_count')) \
+        .select_from(Student) \
+        .outerjoin(_query_student_done_tasks, _query_student_done_tasks.c.id_student == Student.id) \
+        .filter(Student.id_group == group.id) \
+        .group_by(Student.id).all()
+
+    _query_all_tasks = db.session.query(Student, func.count(Task_student.id_task)) \
+        .join(Task_student, isouter=True) \
+        .filter(Student.id_group == group.id) \
+        .filter(Task_student.id_student == Student.id) \
+        .group_by(Student.id) \
+        .all()
+
+    result = []
+    for i, elem in enumerate(_query_done_tasks):
+        s = elem[0], elem[1], _query_all_tasks[i][1]
+        result.append(s)
+
+    return result
+
+
+def get_solved_ratio_from_group(g):
+    pass
+
+
+def get_task_by_category(c):
+    pass
+
+
+def get_task_by_difficulty(d):
+    pass
