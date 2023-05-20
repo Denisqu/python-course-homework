@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Группы</title>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="2">Группы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>id</b></td>
+                <td><b>name</b></td>
+            </tr>
+            {% for group in groups %}
+            <tr>
+                <td>{{group.id}}</td>
+                <td><a href="{{'/group/%s'%group.id|urlencode}}">{{group.name}}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</head>
+<body>
+
+{% endblock %}
+
+</body>
+</html>

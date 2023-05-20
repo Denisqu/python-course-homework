@@ -8,6 +8,7 @@ import query
 
 app = Flask(__name__, template_folder='../lab4/templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:123@localhost:5432'
+app.config['SECRET_KEY'] = '84bdd533c5499fd913e7eb26498766e21f15406ea11d7ea1'
 db.init_app(app)
 import routes
 utils.test_for_db_connection(app, db)

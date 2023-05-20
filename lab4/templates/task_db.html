@@ -1,10 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+{% extends "layout.html" %}
+{% block content %}
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<h2>Задачи в базе данных</h2>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="6">Задачи</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>id</b></td>
+                <td><b>Название</b></td>
+                <td><b>Категория</b></td>
+                <td><b>Описание</b></td>
+                <td><b>Код</b></td>
+                <td><b>Сложность</b></td>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>{{task.id}}</td>
+                <td>{{task.name}}</td>
+                <td>{{task.category.name}}</td>
+                <td>{{task.description}}</td>
+                <td>{{task.code}}</td>
+                <td>{{task.difficulty.name}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
+
+{% endblock %}
+
 </html>

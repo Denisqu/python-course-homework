@@ -2,24 +2,13 @@ from flask import Flask
 from typing import List
 from flask_sqlalchemy import SQLAlchemy
 
-# from sqlalchemy.orm import *
-# from sqlalchemy import
-
+# one to many tutorial: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iv-database-legacy
+# many-to-many tutorial: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-viii-followers-contacts-and-friends-legacy
 # https://editor.ponyorm.com/user/Denis1902/test/python
 
 
 db = SQLAlchemy()
 
-
-# one to many tutorial: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iv-database-legacy
-# many-to-many tutorial: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-viii-followers-contacts-and-friends-legacy
-
-# todo: понять как сделать связку двух стобцов форен ки ключом
-# task_student = db.Table("task_student",
-#                         db.Column('id_student', db.Integer, db.ForeignKey('student.id')),
-#                         db.Column('id_task', db.Integer, db.ForeignKey('task.id')),
-#                         db.Column('status', db.Boolean, default=False)
-#                         )
 
 class Task_student(db.Model):
     __tablename__ = 'task_student'

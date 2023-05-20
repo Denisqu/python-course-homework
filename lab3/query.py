@@ -4,7 +4,6 @@ from sqlalchemy import func
 from sqlalchemy.sql.expression import false, true
 
 
-
 def create_test_data():
     # task difficulty
     medium = Task_difficulty(name="medium")
@@ -44,11 +43,11 @@ def create_test_data():
     db.session.commit()
 
     # students
-    for i in range(1, 10):
+    for i in range(1, 35):
         student = Student(name=f"StudentName{i}", git=f"github.com/link{i}", id_group=((i % 3) + 1))
         db.session.add(student)
         db.session.commit()
-        student.tasks.extend(db.session.query(Task).all()[0:i])
+        student.tasks.extend(db.session.query(Task).all()[0:(i % 3) + 1])
         db.session.add(student)
         db.session.commit()
 
@@ -74,27 +73,15 @@ def get_all_students_in_group(group):
     return db.session.query(Student).filter(Student.id_group == group.id)
 
 
-def change_students_task_status(student, task, status):
-    pass
+def get_all_tasks():
+    return db.session.query(Task).all()
 
 
-def get_all_student_tasks(s):
-    pass
-
-
-def get_groups_by_teacher(t):
-    pass
-
-
-def get_student_solved_problems(s):
-    pass
-
-
-# def get_student_solved_problems_ratio(student):
-#     task_count = len(student.tasks)
-#     done_count = 0
-#     for task in student.tasks:
-#         pass
+def get_student_tasks(student):
+    _query = db.session.query(Task, Task_student.status)\
+        .join(Task_student, Task_student.id_task == Task.id)\
+        .filter(student.id == Task_student.id_student).all()
+    return _query
 
 
 def get_students_with_tasks_from_group(group):
@@ -138,13 +125,10 @@ def get_students_with_ratio_from_group(group):
     return result
 
 
-def get_solved_ratio_from_group(g):
-    pass
+def add_new_task_to_a_students(students, task):
+    for student in students:
+        student.tasks.append(task)
+        db.session.add(student)
+    db.session.commit()
 
 
-def get_task_by_category(c):
-    pass
-
-
-def get_task_by_difficulty(d):
-    pass
