@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Услуги и их цена</title>
+</head>
+<body>
+<h1>Юридическая фирма</h1>
+    <h2>Предоставляемые услуги:</h2>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="4">Услуги</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Услуга</b></td>
+                <td><b>Имя юриста</b></td>
+                <td><b>ID юриста</b></td>
+                <td><b>Посчитанная стоимость улуги</b></td>
+            </tr>
+            {% for lawyer_w_service in lawyers_w_services %}
+            <tr>
+                <td>{{lawyer_w_service[1].name}}</td>
+                <td>{{lawyer_w_service[0].name}}</td>
+                <td>{{lawyer_w_service[0].id}}</td>
+                <td>{{(lawyer_w_service[0].price_multiplier * lawyer_w_service[1].base_price)|round}} руб</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+{% endblock %}
+
+</html>

@@ -9,8 +9,6 @@ def index():
     return render_template('index.html')
 
 
-#https://www.digitalocean.com/community/tutorials/how-to-use-web-forms-in-a-flask-application
-#todo: Сделать форму с добавлением новой задачи для студентов группы
 @app.route('/group/<int:group_id>', methods=['POST', 'GET'])
 def group(group_id):
     group_query = db.session.query(Group).filter(Group.id == group_id).one()

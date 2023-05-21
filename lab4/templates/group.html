@@ -45,10 +45,10 @@ table, th, td {
     {% for message in get_flashed_messages() %}
             <div class="alert">{{ message }}</div>
     {% endfor %}
-    <form method="post">
-        <input name="task_id" placeholder="task id">
-        <button type=submit>Добавить Задачу для всей группы</button>
-    </form>
+<form method="post">
+    <input name="task_id" placeholder="task id">
+    <button type=submit>Добавить Задачу для всей группы</button>
+</form>
 </body>
 
 {% endblock %}

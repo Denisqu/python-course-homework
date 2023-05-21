@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Клиент: {{client.name}}</title>
+</head>
+<body>
+<h1>Клиент: {{client.name}}</h1>
+<table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="9">Дела клиента:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>ID Дела</b></td>
+                <td><b>ID юриста</b></td>
+                <td><b>Имя юриста</b></td>
+                <td><b>Тип дела</b></td>
+                <td><b>Область дела</b></td>
+                <td><b>Тип услуги</b></td>
+                <td><b>Описание</b></td>
+                <td><b>Статус</b></td>
+                <td><b>Управление делом</b></td>
+            </tr>
+            {% for case in client_cases %}
+            <tr>
+                <td>{{case.id}}</td>
+                <td>{{case.id_lawyer}}</td>
+                <td>{{case.lawyer.name}}</td>
+                <td>{{case.case_type.name}}</td>
+                <td>{{case.case_domain.name}}</td>
+                <td>{{case.service_type.name}}</td>
+                <td>{{case.description}}</td>
+                <td>{{case.status}}</td>
+                <td>
+                    <a href="{{url_for('change_case_status', id_case=case.id)}}">
+                        Открыть\Закрыть
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+
+<form method="post">
+        <input name=id_lawyer placeholder="ID Юриста">
+        <select name="case_type">
+            {% for i in case_types %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+        <select name="case_domain">
+            {% for i in case_domains %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+        <select name="service_type">
+            {% for i in service_types %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <textarea name="description"
+                  placeholder="Описание дела"
+                  rows="15"
+                  cols="60"
+        ></textarea>
+        <br>
+        <button type=submit>Добавить новое дело</button>
+</form>
+{% for message in get_flashed_messages() %}
+<div class="alert">{{ message }}</div>
+{% endfor %}
+
+
+{% endblock %}
+
+</body>
+</html>

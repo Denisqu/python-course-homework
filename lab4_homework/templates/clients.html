@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Клиенты</title>
+</head>
+<body>
+<table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="2">Клиенты</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>ID клиента</b></td>
+                <td><b>Имя клиента</b></td>
+            </tr>
+            {% for client in clients %}
+            <tr>
+                <td><a href="{{'/client/%s'%client.id|urlencode}}">{{client.id}}</a></td>
+                <td>{{client.name}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+<form method="post">
+        <input name="client_name" placeholder="Имя клиента">
+        <button type=submit>Добавить нового клиента</button>
+</form>
+
+{% for message in get_flashed_messages() %}
+<div class="alert">{{ message }}</div>
+{% endfor %}
+
+{% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Свободные юристы по каждой услуге</title>
+</head>
+<body>
+
+{% for service in free_lawyers_by_service.keys() %}
+
+<table style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="4">Услуга: {{service.name}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Имя юриста</b></td>
+                <td><b>ID юриста</b></td>
+                <td><b>Посчитанная стоимость улуги</b></td>
+            </tr>
+            {% for lawyer in free_lawyers_by_service[service] %}
+            <tr>
+                <td>{{lawyer.name}}</td>
+                <td>{{lawyer.id}}</td>
+                <td>{{(service.base_price * lawyer.price_multiplier)|round}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+
+{% endfor %}
+
+
+{% endblock %}
+
+</body>
+
+</html>
