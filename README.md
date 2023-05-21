@@ -8,4 +8,4 @@
 * Дз6 (10.05.23) + классная работа: лаба2, лаба3_вар8 - Done
 * lab3, lab4 - Done
 * lab3_homework, lab2_homework - Done
-* lab1 - TODO
+* lab1 - Done
