@@ -47,7 +47,7 @@ def edit_test(test_id: int, payload: schemas.TestSchema, db: Session = Depends(g
 
     update_data = payload.dict(exclude_unset=True)
     _test_q.filter(model.Test.id == test_id).update(update_data,
-                                                    synchronize_session=str(False))
+                                                    synchronize_session=False)
     db.commit()
     db.refresh(_test)
     return {"status": "success", "test": _test}
@@ -61,6 +61,6 @@ def delete_test(test_id: int, db: Session = Depends(get_db)):
     if not _test:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'No test with this id: {id} found')
-    _test_q.delete(synchronize_session=str(False))
+    _test_q.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
