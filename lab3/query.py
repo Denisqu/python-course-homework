@@ -33,6 +33,10 @@ def create_test_data():
                             difficulty=medium))
         db.session.commit()
 
+    # test
+    db.session.add(Test(id_task=1, name='Tests for something #1', code='Code...'))
+    db.session.commit()
+
     group_b52 = Group(name="b-52")
     # groups
     db.session.add_all([

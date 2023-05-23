@@ -9,3 +9,4 @@
 * lab3, lab4 - Done
 * lab3_homework, lab2_homework - Done
 * lab1 - Done
+* lab5 - Done

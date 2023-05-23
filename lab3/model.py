@@ -27,6 +27,7 @@ class Task(db.Model):
     description = db.Column(db.String, nullable=True)
     code = db.Column(db.String, nullable=True)
     id_task_difficulty = db.Column(db.Integer, db.ForeignKey('task_difficulty.id'))
+    tests = db.relationship('Test', backref='task')
     #students = db.relationship('Student', secondary=task_student, backref='tasks')  # (many-to-many)
 
 
@@ -79,6 +80,14 @@ class Group(db.Model):
     name = db.Column(db.String(255))
     students = db.relationship('Student', backref='group')
 
+
+class Test(db.Model):
+    __tablename__ = 'test'
+
+    id = db.Column(db.Integer, primary_key=True)
+    id_task = db.Column(db.Integer, db.ForeignKey('task.id'))
+    name = db.Column(db.String)
+    code = db.Column(db.String)
 
 
 
